@@ -20,9 +20,9 @@ function TodoList() {
     }
   };
 
-  const deleteTodo = (row: number) => {
+  const deleteTodo = (id: string) => {
     if (window.confirm("Are you sure?")) {
-      setTodos(todos.filter((_, index) => row !== index));
+      setTodos(todos.filter(todo => id !== todo.id));
     }
   };
 
