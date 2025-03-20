@@ -9,12 +9,14 @@ import { v4 as uuidv4 } from 'uuid';
 function TodoList() {
   const [todo, setTodo] = useState<Todo>({id: '', description: '', priority: 'low', date: ''});
   const [todos, setTodos] = useState<Todo[]>([]);
+  const [descriptionError, setDescriptionError] = useState(false);
   
   const addTodo = () => {
-    if (!todo.description || !todo.date) {
-      alert("Enter values first!");
+    if (!todo.description) {
+      setDescriptionError(true);
     } 
     else {
+      setDescriptionError(false);
       setTodos([...todos, { ...todo, id: uuidv4()}]);
       setTodo({id: '', description: '', priority: 'low', date: '',});
     }
@@ -28,11 +30,13 @@ function TodoList() {
 
   return(
     <>
-      <Stack direction="row" mt={2} mb={2} spacing={2} justifyContent="center" alignItems="center">
+      <Stack direction="row" mt={2} mb={4} spacing={2} justifyContent="center" alignItems="center">
         <TextField 
           label="Description" 
           onChange={event => setTodo({...todo, description: event.target.value})} 
-          value={todo.description} 
+          value={todo.description}
+          required
+          error={descriptionError}
         />
         <TextField
           title="Priority"
